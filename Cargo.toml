@@ -1,5 +1,5 @@
 [package]
-name = "ActixTheFirst"
+name = "actix_the_first"
 version = "0.1.0"
 edition = "2021"
 
