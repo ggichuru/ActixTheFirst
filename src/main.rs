@@ -13,8 +13,8 @@ async fn main() -> std::io::Result<()> {
 
     // Create HttpServer struct
     HttpServer::new(move || {
-        let logger = logger::default();
-        App::new().wrap(logger).service(get)
+        let logger = Logger::default();
+        App::new().wrap(logger).service(get_task)
     })
     .bind(("127.0.0.1", 5050))?
     .run()
