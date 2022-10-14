@@ -1,7 +1,8 @@
 mod api;
+mod model;
 mod repository;
 
-use api::task::get_task; // Api To use to query the state of a task
+use api::task::{complete_task, fail_task, get_task, pause_task, start_task, submit_task}; // Api To use to query the state of a task
 use repository::ddb::DDBRepository;
 
 use actix_web::{middleware::Logger, web::Data, App, HttpServer}; // Import from actix framework
@@ -24,7 +25,15 @@ async fn main() -> std::io::Result<()> {
 
         let logger = Logger::default();
 
-        App::new().wrap(logger).app_data(ddb_data).service(get_task)
+        App::new()
+            .wrap(logger)
+            .app_data(ddb_data)
+            .service(get_task)
+            .service(submit_task)
+            .service(complete_task)
+            .service(start_task)
+            .service(pause_task)
+            .service(fail_task)
     })
     .bind(("127.0.0.1", 5050))?
     .run()
